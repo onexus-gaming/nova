@@ -33,20 +33,20 @@ read -p "(e.g. Super Game) " game_title
 echo "what should your game's identifier be?"
 read -p "(e.g. supergame) " game_id
 
-echo <<EOF
+cat <<EOF > main.lua
 nova = require "lib.nova"
 
 nova.title = [[$game_title]]
 nova.id = [[$game_id]]
 
 -- your code here
-EOF > main.lua
+EOF
 
-echo <<EOF
+cat <<EOF > conf.lua
 function love.conf(t)
     t.window.title = [[$game_title]]
     t.identity = [[$game_id]]
 end
-EOF > conf.lua
+EOF
 
 echo "all done! follow the tutorial to get started."

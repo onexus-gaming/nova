@@ -54,8 +54,10 @@ nova = {
 if not pcall(function() require "scenes.initial" end) then
     print("[nova/scenes] no initial scene")
     nova.scenes.loaded.initial = require "lib.nova.default_initial"
-    nova.scenes:switch("initial")
+else
+    nova.scenes:load("initial")
 end
+nova.scenes:switch("initial")
 
 -- loading services
 nova.UI = require("lib.nova.services.UI")()
@@ -79,7 +81,7 @@ local function createHook(name)
     end
 end
 
-local hookTable = {"load", "update", "draw"}
+local hookTable = {"load", "update", "draw", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved"}
 for i, v in ipairs(hookTable) do
     love[v] = createHook(v)
 end

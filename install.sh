@@ -10,9 +10,9 @@ echo "use git for version control? (repository must already be set up)"
 read -p "[y/N]" use_git
 case "$use_git" in
     "y"|"Y")
-        git submodule add https://github.com/onexus-gaming/nova lib
+        git submodule add https://github.com/onexus-gaming/nova lib/nova
     ;;
     *)
-        echo "currently unsupported"
+        git clone https://github.com/onexus-gaming/nova lib/nova
     ;;
 esac

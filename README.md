@@ -5,6 +5,8 @@ simple and effective framework to make games with love2d, successor to novum
 
 **NOTE**: this module must be placed in the `lib/` library along with its dependencies.
 
+**NOTE**: git must be installed.
+
 ## quickstart
 
 automated tools for initializing a nova project

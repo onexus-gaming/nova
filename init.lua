@@ -17,6 +17,7 @@ end
 
 local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
+local Rectangle = "lib.nova.classes.Rectangle"
 
 nova = {
     version = "0.1.0",
@@ -24,6 +25,8 @@ nova = {
 
     title = "untitled nova game",
     id = "nova" .. love.math.random(1, 999999),
+
+    Rectangle = Rectangle,
 
     Scene = Scene,
     Service = Service,

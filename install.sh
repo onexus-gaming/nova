@@ -16,3 +16,37 @@ case "$use_git" in
         git clone https://github.com/onexus-gaming/nova lib/nova
     ;;
 esac
+
+git clone https://github.com/bakpakin/binser lib/temp
+mkdir lib/binser
+mv lib/temp/binser.lua lib/binser/init.lua
+rm -rf lib/temp
+
+git clone https://github.com/rxi/classic lib/temp
+mkdir lib/classic
+mv lib/temp/classic.lua lib/classic/init.lua
+rm -rf lib/temp
+
+echo "what should your game be titled?"
+read -p "(e.g. Super Game)" game_title
+
+echo "what should your game's identifier be?"
+read -p "(e.g. supergame)" game_id
+
+echo <<EOF
+nova = require "lib.nova"
+
+nova.title = [[$game_title]]
+nova.id = [[$game_id]]
+
+-- your code here
+EOF > main.lua
+
+echo <<EOF
+function love.conf(t)
+    t.window.title = [[$game_title]]
+    t.identity = [[$game_id]]
+end
+EOF > conf.lua
+
+echo "all done! follow the tutorial to get started."

@@ -17,7 +17,7 @@ end
 
 local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
-local Rectangle = "lib.nova.classes.Rectangle"
+local Rectangle = require "lib.nova.classes.Rectangle"
 
 nova = {
     version = "0.1.0",

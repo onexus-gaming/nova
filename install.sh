@@ -34,7 +34,7 @@ echo "what should your game's identifier be?"
 read -p "(e.g. supergame) " game_id
 
 cat <<EOF > main.lua
-nova = require "lib.nova"
+require "lib.nova"
 
 nova.title = [[$game_title]]
 nova.id = [[$game_id]]

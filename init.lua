@@ -7,7 +7,7 @@ Object = require "lib.classic"
 
 local Scene = require "lib.nova.classes.Scene"
 
-local nova = {
+nova = {
     version = "0.1.0",
     year = 2025,
 
@@ -56,5 +56,3 @@ for i, v in ipairs(hookTable) do
 end
 
 nova.scenes.current:opened()
-
-return nova

@@ -28,10 +28,10 @@ mv lib/temp/classic.lua lib/classic/init.lua
 rm -rf lib/temp
 
 echo "what should your game be titled?"
-read -p "(e.g. Super Game)" game_title
+read -p "(e.g. Super Game) " game_title
 
 echo "what should your game's identifier be?"
-read -p "(e.g. supergame)" game_id
+read -p "(e.g. supergame) " game_id
 
 echo <<EOF
 nova = require "lib.nova"

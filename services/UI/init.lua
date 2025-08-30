@@ -12,3 +12,5 @@ function UI:getScalingCoefficient()
 
     return math.min(w/self.intendedDimensions.width, h/self.intendedDimensions.height)
 end
+
+return UI

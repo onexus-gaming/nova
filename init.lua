@@ -39,7 +39,9 @@ for i, v in ipairs(hook_table) do
         if nova.scenes.current[v] then
             nova.scenes.current[v](...)
         end
-        original_function(...)
+        if original_function then
+            original_function(...)
+        end
     end
 end
 

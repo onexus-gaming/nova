@@ -4,3 +4,7 @@
 -- dependencies
 binser = require "lib.binser"
 Object = require "lib.classic"
+
+local nova = {}
+
+return nova

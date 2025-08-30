@@ -11,7 +11,7 @@ automated tools for initializing a nova project
 
 ### without novatools
 
-in a `bash`-compliant shell with `curl` installed, run
+in a `bash`-compliant shell with `curl` installed, targeting a dedicated folder/initialized git repository, run
 
 ```sh
 bash <(curl -s https://onexus-gaming.github.io/nova/install.sh)

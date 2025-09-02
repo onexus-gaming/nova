@@ -84,7 +84,7 @@ local function createHook(name)
     end
 end
 
-local hookTable = {"load", "update", "draw", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved"}
+local hookTable = {"load", "update", "draw", "resize", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved", "dropbegan", "dropmoved", "dropcompleted", "filedropped"}
 for i, v in ipairs(hookTable) do
     love[v] = createHook(v)
 end

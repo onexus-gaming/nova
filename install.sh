@@ -58,3 +58,15 @@ mkdir -p res/bgm
 mkdir -p res/fonts
 
 echo "all done! follow the tutorial to get started."
+
+read -p "delete this installer? [Y/n]" delete
+
+case "$delete" in
+    "n"|"N")
+        echo "the installer has been preserved."
+    ;;
+    *)
+        echo "deleting installer."
+        rm -f installer.sh
+    ;;
+esac

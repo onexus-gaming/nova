@@ -49,4 +49,12 @@ function love.conf(t)
 end
 EOF
 
+mkdir scenes
+mkdir services
+mkdir -p res/img
+mkdir -p res/bg
+mkdir -p res/sfx
+mkdir -p res/bgm
+mkdir -p res/fonts
+
 echo "all done! follow the tutorial to get started."

@@ -1,7 +1,7 @@
 local Timer = Object:extend()
 
 function Timer:new(min, max, initial)
-    -- ADD TYPE CHECKING
+    -- TODO: ADD TYPE CHECKING
 
     self.min = min
     self.max = max

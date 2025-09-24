@@ -40,6 +40,7 @@ end
 local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
 local Rectangle = require "lib.nova.classes.Rectangle"
+local Timer = require "lib.nova.classes.Timer"
 
 -- simple and effective framework to make games with love2d, successor to novum
 nova = {
@@ -56,6 +57,8 @@ nova = {
 
     Scene = Scene,
     Service = Service,
+
+    Timer = Timer,
 
     scenes = {
         loaded = {},

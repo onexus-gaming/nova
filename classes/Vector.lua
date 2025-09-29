@@ -1,0 +1,111 @@
+-- helper class for vector calculation
+
+local Vector = Object:extend()
+
+local privateValues = {}
+
+function Vector:new(...)
+    local args = {...}
+
+    if #args == 1 and type(args[1]) == "table" then
+        self[privateValues] = {}
+        args = args[1]
+        for i, v in ipairs(args) do
+            table.insert(self[privateValues], v)
+        end
+    else
+        for i, v in ipairs(args) do
+            if type(v) ~= "number" then
+                error("vector value " .. i .. " (" .. v .. ")" .. "is of type " .. type(v), ", not number", 2)
+            end
+            self[privateValues] = args
+        end
+    end
+end
+
+function Vector:values()
+    local copy = {}
+
+    for i, v in ipairs(self[privateValues]) do
+        table.insert(copy, v)
+    end
+
+    return copy
+end
+
+function Vector:get(i)
+    return self[privateValues][i] or 0
+end
+
+function Vector:dimension()
+    return #self[privateValues]
+end
+
+function Vector:copy()
+    return Vector(self:values())
+end
+
+function Vector:sum(other)
+    nova.checkArgClass("other", other, Vector)
+
+    local values = {}
+    for i = 1, math.max(self:dimension(), other:dimension()) do
+        table.insert(values, self:get(i) + other:get(i))
+    end
+
+    return Vector((unpack or table.unpack)(values))
+end
+
+function Vector:__add(other)
+    return self:sum(other)
+end
+
+function Vector:valueProduct(other)
+    nova.checkArgClass("other", other, Vector)
+
+    local values = {}
+    for i = 1, math.max(self:dimension(), other:dimension()) do
+        table.insert(values, self:get(i) * other:get(i))
+    end
+
+    return Vector((unpack or table.unpack)(values))
+end
+
+function Vector:scalarProduct(other)
+    nova.checkArgClass("other", other, Vector)
+
+    local value = 0
+    for i = 1, self:dimension() do
+        value = value + self:get(i) * other:get(i)
+    end
+
+    return value
+end
+
+function Vector:__mul(other)
+    if type(other) == "table" and other:is(Vector) then
+        return self:valueProduct(other)
+    else
+        error("cannot compute product between vector and " .. type(other))
+    end
+end
+
+function Vector:__tostring()
+    s = "Vector"
+
+    if self[privateValues] ~= nil then
+        s = s .. "("
+        for i = 1, #self[privateValues] do
+            s = s .. self[privateValues][i]
+            if i < #self[privateValues] then
+                s = s .. " "
+            end
+        end
+
+        s = s .. ")"
+    end
+
+    return s
+end
+
+return Vector

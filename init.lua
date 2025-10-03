@@ -41,6 +41,8 @@ local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
 local Rectangle = require "lib.nova.classes.Rectangle"
 local Timer = require "lib.nova.classes.Timer"
+local Store = require "lib.nova.classes.Store"
+local Vector = require "lib.nova.classes.Vector"
 
 -- simple and effective framework to make games with love2d, successor to novum
 nova = {
@@ -59,6 +61,25 @@ nova = {
     Service = Service,
 
     Timer = Timer,
+    Store = Store,
+    Vector = Vector,
+    vectors = {
+        null2d = Vector(0, 0),
+        null3d = Vector(0, 0, 0),
+        extend2d = Vector(1, 1),
+        extend3d = Vector(1, 1, 1),
+        flip1d = Vector(-1),
+        flipX2d = Vector(-1, 1),
+        flipY2d = Vector(1, -1),
+        flipX3d = Vector(-1, 1, 1),
+        flipY3d = Vector(1, -1, 1),
+        flipZ3d = Vector(1, 1, -1),
+        X2d = Vector(1, 0),
+        Y2d = Vector(0, 1),
+        X3d = Vector(1, 0, 0),
+        Y3d = Vector(0, 1, 0),
+        Z3d = Vector(0, 0, 1),
+    },
 
     scenes = {
         loaded = {},

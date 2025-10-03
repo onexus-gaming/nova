@@ -1,5 +1,5 @@
--- helper class for vector calculation
-
+---Helper class for vector calculation
+---@class Vector
 local Vector = Object:extend()
 
 local privateValues = {}
@@ -82,9 +82,22 @@ function Vector:scalarProduct(other)
     return value
 end
 
+function Vector:scale(coefficient)
+    nova.checkArgType("coefficient", coefficient, "number")
+
+    local values = {}
+    for i = 1, self:dimension() do
+        table.insert(values, self:get(i) * coefficient)
+    end
+
+    return Vector((unpack or table.unpack)(values))
+end
+
 function Vector:__mul(other)
     if type(other) == "table" and other:is(Vector) then
         return self:valueProduct(other)
+    elseif type(other) == "number" then
+        return self:scale(other)
     else
         error("cannot compute product between vector and " .. type(other))
     end

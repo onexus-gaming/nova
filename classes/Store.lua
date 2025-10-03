@@ -1,5 +1,7 @@
--- Basic class for storing data.
--- Doesn't use the default object system for simplicity reason.
+---Basic class for storing data.
+---Doesn't use the default object system for simplicity reasons.
+---@class Store
+---@field callbacks table
 
 local isolatedValue = {}
 

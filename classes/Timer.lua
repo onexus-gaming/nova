@@ -67,7 +67,7 @@ function Timer:backwards()
 end
 
 ---Update the timer
----@param dt number
+---@param dt float
 function Timer:update(dt)
     nova.checkArgType("dt", dt, "number")
     if self.running then

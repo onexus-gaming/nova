@@ -1,5 +1,8 @@
--- nova 0.1.1
+-- nova 0.1.2
 -- onexus, 2025
+
+---@alias class table MUST be a class
+---@alias float number n >= math.floor(n)
 
 -- dependencies
 binser = require "lib.binser"
@@ -26,7 +29,7 @@ end
 
 ---@param paramName string
 ---@param value any
----@param class table MUST be a class
+---@param class class MUST be a class
 local function checkArgClass(paramName, value, class)
     if type(value) ~= "table" then
         error("parameter \"" .. paramName .. "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
@@ -52,7 +55,7 @@ local Vector = require "lib.nova.classes.Vector"
 
 -- simple and effective framework to make games with love2d, successor to novum
 nova = {
-    version = "0.1.1",
+    version = "0.1.2",
     year = 2025,
 
     title = "untitled nova game",
@@ -70,10 +73,10 @@ nova = {
     Store = Store,
     Vector = Vector,
     vectors = {
-        null2d = Vector(0, 0),
-        null3d = Vector(0, 0, 0),
-        extend2d = Vector(1, 1),
-        extend3d = Vector(1, 1, 1),
+        null2d = Vector.make(2),
+        null3d = Vector.make(3),
+        extend2d = Vector.make(2, 1),
+        extend3d = Vector.make(3, 1),
         flip1d = Vector(-1),
         flipX2d = Vector(-1, 1),
         flipY2d = Vector(1, -1),
@@ -86,6 +89,13 @@ nova = {
         Y3d = Vector(0, 1, 0),
         Z3d = Vector(0, 0, 1),
     },
+
+    -- Does nothing
+    noop = function(...) end,
+    -- Returns the arguments it takes
+    echo = function(...) return ... end,
+    -- Returns the arguments it takes as a table
+    echoT = function(...) return {...} end,
 
     scenes = {
         loaded = {},

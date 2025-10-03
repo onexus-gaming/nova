@@ -15,12 +15,18 @@ local function findInTable(t, e)
     return nil
 end
 
+---@param paramName string
+---@param value any
+---@param expectedType type
 local function checkArgType(paramName, value, expectedType)
     if type(value) ~= expectedType then
         error("parameter \"" .. paramName .. "\" expected an argument of type \"" .. expectedType .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
     end
 end
 
+---@param paramName string
+---@param value any
+---@param class table MUST be a class
 local function checkArgClass(paramName, value, class)
     if type(value) ~= "table" then
         error("parameter \"" .. paramName .. "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)

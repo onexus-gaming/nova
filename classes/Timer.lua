@@ -9,7 +9,10 @@
 local Timer = Object:extend()
 
 function Timer:new(min, max, initial)
-    -- TODO: ADD TYPE CHECKING
+    nova.checkArgType("min", min, "number")
+    nova.checkArgType("max", max, "number")
+    nova.checkArgType("initial", initial, "number")
+
 
     self.min = min
     self.max = max
@@ -47,6 +50,7 @@ end
 ---Set the timer value
 ---@param value number
 function Timer:set(value)
+    nova.checkArgType("value", value, "number")
     self.current = math.min(math.max(self.min, value), self.max)
 end
 
@@ -65,6 +69,7 @@ end
 ---Update the timer
 ---@param dt number
 function Timer:update(dt)
+    nova.checkArgType("dt", dt, "number")
     if self.running then
         self.current = math.min(math.max(self.min, self.current + self.direction * dt), self.max)
     end

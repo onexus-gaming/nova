@@ -25,13 +25,18 @@ local SmoothCounter = {
     setValue = function(self, value)
         self.value = value
         if value < self.target then
-            self.direction = -1
-        else
             self.direction = 1
+        else
+            self.direction = -1
         end
     end,
     setTarget = function(self, target)
         self.target = target
+        if target >= self.value then
+            self.direction = 1
+        else
+            self.direction = -1
+        end
     end,
     setExponent = function(self, exponent)
         self.exponent = exponent

@@ -172,7 +172,7 @@ function Vector:__div(other)
 end
 
 function Vector:__tostring()
-    s = "Vector"
+    local s = "Vector"
 
     if self[privateValues] ~= nil then
         s = s .. "("

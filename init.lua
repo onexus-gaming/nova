@@ -5,6 +5,7 @@
 ---@alias float number n >= math.floor(n)
 
 -- dependencies
+---@diagnostic disable-next-line: lowercase-global
 binser = require "lib.binser"
 Object = require "lib.classic"
 
@@ -54,6 +55,7 @@ local Store = require "lib.nova.classes.Store"
 local Vector = require "lib.nova.classes.Vector"
 
 -- simple and effective framework to make games with love2d, successor to novum
+---@diagnostic disable-next-line: lowercase-global
 nova = {
     version = "0.1.2",
     year = 2025,
@@ -96,6 +98,13 @@ nova = {
     echo = function(...) return ... end,
     -- Returns the arguments it takes as a table
     echoT = function(...) return {...} end,
+    -- Returns a function that returns the passed values
+    wrap = function(...)
+        local args = {...}
+        return function()
+            return (unpack or table.unpack)(args)
+        end
+    end,
 
     scenes = {
         loaded = {},

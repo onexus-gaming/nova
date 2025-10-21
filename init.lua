@@ -50,8 +50,9 @@ end
 local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
 local Rectangle = require "lib.nova.classes.Rectangle"
-local Timer = require "lib.nova.classes.Timer"
 local Store = require "lib.nova.classes.Store"
+local Timer = require "lib.nova.classes.Timer"
+local Toast = require "lib.nova.classes.Toast"
 local Vector = require "lib.nova.classes.Vector"
 
 -- simple and effective framework to make games with love2d, successor to novum
@@ -72,6 +73,7 @@ nova = {
     Service = Service,
 
     Timer = Timer,
+    Toast = Toast,
     Store = Store,
     Vector = Vector,
     vectors = {
@@ -148,7 +150,8 @@ nova.scenes:switch("initial")
 
 -- Helper functions for graphics
 nova.graphics = require("lib.nova.services.graphics")()
-nova.services:registerInOrder(nova.graphics)
+nova.toasts = require("lib.nova.services.toasts")(5, 4, 4)
+nova.services:registerInOrder(nova.toasts, nova.graphics)
 
 local function createHook(name)
     return function(...)

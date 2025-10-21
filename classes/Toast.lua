@@ -32,22 +32,22 @@ end
 
 function Toast:height(lifetime)
     if lifetime == nil then lifetime = 0 end
-    return math.max(self.TEXT_FONT:getWidth(self.text), self.TYPE_FONT:getWidth(self.type[1])) + 8
+    return self.TEXT_FONT:getHeight() + self.TYPE_FONT:getHeight() + 8
 end
 
 function Toast:render(x, y, lifetime)
     local of = love.graphics.getFont()
     local oc = {love.graphics.getColor()}
-    
+
     if lifetime < 0.125 then
         love.graphics.setColor(self.type[2])
-        love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height())
+        love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
     else
         love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle('fill', x, y, self:width(), self:height())
+        love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
 
         love.graphics.setColor(self.type[2])
-        love.graphics.rectangle('fill', x, y, 4, self:height())
+        love.graphics.rectangle('fill', x, y, 4, self:height(lifetime))
 
         love.graphics.setFont(self.TYPE_FONT)
         love.graphics.print(self.type[1], x+8, y+4)
@@ -60,9 +60,12 @@ function Toast:render(x, y, lifetime)
             local f = 1-math.min((lifetime - 0.125) * 8, 1)
             local c = self.type[2]
             love.graphics.setColor(c[1], c[2], c[3], f)
-            love.graphics.rectangle('fill', x, y, self:width(), self:height())
+            love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
         end
     end
+
+    love.graphics.setColor(oc)
+    love.graphics.setFont(of)
 end
 
 return Toast

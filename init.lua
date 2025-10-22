@@ -1,4 +1,4 @@
--- nova 0.1.2
+-- nova 0.1.3
 -- onexus, 2025
 
 ---@alias class table MUST be a class
@@ -58,7 +58,7 @@ local Vector = require "lib.nova.classes.Vector"
 -- simple and effective framework to make games with love2d, successor to novum
 ---@diagnostic disable-next-line: lowercase-global
 nova = {
-    version = "0.1.2",
+    version = "0.1.3",
     year = 2025,
 
     title = "untitled nova game",
@@ -136,22 +136,24 @@ nova = {
     },
 }
 
+-- loading services
+
+-- Helper functions for graphics
+nova.graphics = require("lib.nova.services.graphics")()
+-- Toast manager
+nova.toasts = require("lib.nova.services.toasts")(5, 4, 4)
+nova.services:registerInOrder(nova.toasts, nova.graphics)
+
 -- loading scenes
 
 if not pcall(function() require "scenes.initial" end) then
-    print("[nova/scenes] no initial scene")
+    print("[nova/scenes] no initial scene found, defaulting to demo scene.")
+    nova.toasts:post(nova.Toast.TOAST_TYPE.WARNING, "no initial scene found, defaulting to demo scene.")
     nova.scenes.loaded.initial = require "lib.nova.default_initial"
 else
     nova.scenes:load("initial")
 end
 nova.scenes:switch("initial")
-
--- loading services
-
--- Helper functions for graphics
-nova.graphics = require("lib.nova.services.graphics")()
-nova.toasts = require("lib.nova.services.toasts")(5, 4, 4)
-nova.services:registerInOrder(nova.toasts, nova.graphics)
 
 local function createHook(name)
     return function(...)

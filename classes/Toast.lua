@@ -42,7 +42,7 @@ function Toast:render(x, y, lifetime)
     if lifetime < 0.125 then
         love.graphics.setColor(self.type[2])
         love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
-    else
+    elseif lifetime < self.decay - 0.125 then
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
 
@@ -61,7 +61,16 @@ function Toast:render(x, y, lifetime)
             local c = self.type[2]
             love.graphics.setColor(c[1], c[2], c[3], f)
             love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
+        elseif lifetime >= self.decay - 0.25 then
+            local t = (lifetime - self.decay + 0.25)*8
+            love.graphics.setColor(self.type[2])
+            love.graphics.rectangle('fill', x, y, self:width(lifetime)*t, self:height(lifetime))
         end
+    else
+        local f = 1-math.min((lifetime - self.decay + 0.125) * 8, 1)
+        local c = self.type[2]
+        love.graphics.setColor(c[1], c[2], c[3], f)
+        love.graphics.rectangle('fill', x, y, self:width(lifetime), self:height(lifetime))
     end
 
     love.graphics.setColor(oc)

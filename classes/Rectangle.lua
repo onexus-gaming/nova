@@ -41,4 +41,15 @@ function Rectangle:intersects(other)
     end
 end
 
+---Calculate the vectors for each corner of the rectangle
+---@return table
+function Rectangle:vectors()
+    return {
+        nova.Vector(self.x, self.y),
+        nova.Vector(self.x + self.width, self.y),
+        nova.Vector(self.x, self.y + self.height),
+        nova.Vector(self.x + self.width, self.y + self.height),
+    }
+end
+
 return Rectangle

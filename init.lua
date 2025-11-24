@@ -58,7 +58,7 @@ local Vector = require "lib.nova.classes.Vector"
 -- simple and effective framework to make games with love2d, successor to novum
 ---@diagnostic disable-next-line: lowercase-global
 nova = {
-    version = "0.1.3",
+    version = "0.1.4",
     year = 2025,
 
     title = "untitled nova game",

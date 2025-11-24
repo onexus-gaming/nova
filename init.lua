@@ -113,9 +113,20 @@ nova = {
         current = Scene(),
         load = function(self, name)
             self.loaded[name] = require("scenes." .. name)
+            if self.loaded[name].isSingleton then
+                self.loaded[name] = self.loaded[name]()
+            end
         end,
         switch = function(self, name, ...)
-            self.current = self.loaded[name](...)
+            if self.loaded[name].isSingleton then
+                self.current = self.loaded[name]
+            else
+                self.current = self.loaded[name](...)
+            end
+
+            if self.loaded[name].opened then
+                self.loaded[name].opened(...)
+            end
         end,
     },
 

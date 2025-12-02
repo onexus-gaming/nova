@@ -1,11 +1,17 @@
 # nova
 simple and effective framework to make games with love2d, successor to novum
 
-**NOTE**: this repository cannot be run directly.
+> [!WARNING]  
+> this repository has been made public early in order to access GitHub wikis. you can try making games with this if you want to read the source code.
 
-**NOTE**: this module must be placed in the `lib/` library along with its dependencies.
+> [!WARNING]  
+> this repository cannot be run directly.
 
-**NOTE**: git must be installed.
+> [!IMPORTANT]  
+> this module must be placed in the `lib/` library along with its dependencies.
+
+> [!NOTE]  
+> git **must** be installed to use the **install script**.
 
 ## quickstart
 

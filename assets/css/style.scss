@@ -8,4 +8,16 @@ header {
 }
 #banner {
     background: #00a3ff;
+
+    .button {
+        background: #242424;
+        background-color: #242424;
+        color: #bbb;
+        transition: 250ms;
+        &:hover {
+            background: #474747;
+            background-color: #474747;
+            transition: 250ms;
+        }
+    }
 }

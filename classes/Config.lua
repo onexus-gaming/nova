@@ -1,17 +1,18 @@
 local function noop(...) end
 
----class to manage global and individual configurations, with support for backups, upgrading and downgrading
+---class to manage global and individual configurations, with support for backups, upgrading and downgrading, and data constraints
 ---@class Config
 local Config = Object:extend()
 
 ---initialize a new configuration handler
----@param configData table {file: string, version: number, onUpgrade: function(self, storedVersion: number) -> nil, onDowngrade: function(self, storedVersion: number) -> nil, defaults: table}
+---@param configData table {file: string, version: number, onUpgrade: function(self, storedVersion: number) -> nil, onDowngrade: function(self, storedVersion: number) -> nil, defaults: table, constraints: {...key = function(value) -> boolean}}
 function Config:new(configData)
-    self._file = configData.file
+    self._file = configData.file or 'config.sav'
     self._version = configData.version
     self._onUpgrade = configData.onUpgrade or noop
     self._onDowngrade = configData.onDowngrade or noop
-    self._defaults = configData.defaults
+    self._defaults = configData.defaults or {}
+    self._constraints = configData.constraints or {}
 
     self:load()
 end
@@ -20,6 +21,29 @@ end
 function Config:init()
     self.options = self._defaults
     self:save()
+end
+
+---Make sure that a loaded option matches its constraint if it has any.
+---@param key any the given key
+---@return boolean
+function Config:checkSingleConstraint(key)
+    if self._constraints[key] == nil then return true end
+    if not self._constraints[key](self:get(key)) then
+        error("configuration from " .. self:file() .. ": constraint not matched for key '" .. key .. "'", 2)
+        return false
+    end
+    return true
+end
+
+---Make sure that the given constraints match the loaded options.
+---Errors if any constraint is not matched.
+function Config:checkConstraints()
+    for k, v in pairs(self._constraints) do
+        if not self:checkSingleConstraint(k) then
+            return false
+        end
+    end
+    return true
 end
 
 -- TODO: backup autoload
@@ -44,11 +68,15 @@ function Config:load()
     else
         error("attempted to load config from " .. info.type, 2)
     end
+
+    self:checkConstraints()
 end
 
 ---Save the configuration to the save location.
 ---@param outfile string? path to override the default save location
 function Config:save(outfile)
+    self:checkConstraints()
+
     if outfile == nil then
         outfile = self._file
     end
@@ -98,6 +126,7 @@ end
 ---@param value any the new value
 function Config:set(key, value)
     self.options[key] = value
+    self:checkSingleConstraint(key)
 end
 
 return Config

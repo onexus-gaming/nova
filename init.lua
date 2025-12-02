@@ -58,7 +58,7 @@ local Vector = require "lib.nova.classes.Vector"
 -- simple and effective framework to make games with love2d, successor to novum
 ---@diagnostic disable-next-line: lowercase-global
 nova = {
-    version = "0.1.4",
+    version = "0.1.5",
     year = 2025,
 
     title = "untitled nova game",
@@ -125,7 +125,7 @@ nova = {
             end
 
             if self.loaded[name].opened then
-                self.loaded[name].opened(...)
+                self.loaded[name]:opened(...)
             end
         end,
     },
@@ -157,14 +157,18 @@ nova.services:registerInOrder(nova.toasts, nova.graphics)
 
 -- loading scenes
 
-if not pcall(function() require "scenes.initial" end) then
-    print("[nova/scenes] no initial scene found, defaulting to demo scene.")
-    nova.toasts:post(nova.Toast.TOAST_TYPE.WARNING, "no initial scene found, defaulting to demo scene.")
+local success, errorMessage = pcall(function() require "scenes.initial" end)
+
+if not success then
+    print("[nova/scenes] error loading initial scene, defaulting to demo scene.")
+    print(errorMessage)
+    nova.toasts:post(nova.Toast.TOAST_TYPE.ERROR, "error loading initial scene, defaulting to demo scene.")
     nova.scenes.loaded.initial = require "lib.nova.default_initial"
+    nova.scenes:switch("initial", errorMessage)
 else
     nova.scenes:load("initial")
+    nova.scenes:switch("initial")
 end
-nova.scenes:switch("initial")
 
 local function createHook(name)
     return function(...)
@@ -174,7 +178,7 @@ local function createHook(name)
             end
         end
         if nova.scenes.current[name] then
-            nova.scenes.current[name](...)
+            nova.scenes.current[name](nova.scenes.current, ...)
         end
         for i, svc in ipairs(nova.services.list) do
             if svc["_" .. name] then

@@ -1,6 +1,6 @@
 local function noop(...) end
 
----class to maage global and individual configurations, with support for backups, upgrading and downgrading
+---class to manage global and individual configurations, with support for backups, upgrading and downgrading
 ---@class Config
 local Config = Object:extend()
 
@@ -46,8 +46,8 @@ function Config:load()
     end
 end
 
----Save the configuration to the save location
----@param outfile string? to override the default save location
+---Save the configuration to the save location.
+---@param outfile string? path to override the default save location
 function Config:save(outfile)
     if outfile == nil then
         outfile = self._file
@@ -62,27 +62,40 @@ function Config:save(outfile)
     end
 end
 
----Save a backup of the configuration close to the save location (<save location>.bak)
+---Save a backup of the configuration close to the save location (<save location>.bak).
 function Config:backup()
     self:save(self._file .. '.bak')
 end
 
+---Retrieve the save location.
+---@return string
 function Config:file()
     return self._file
 end
 
+---Retrieve the expected configuration version.
+---@return number
 function Config:version()
     return self._version
 end
 
+---Retrieve a configuration values
+---@param key any the key to retrieve the value from
+---@return any
 function Config:get(key)
     return self.options[key]
 end
 
+---Get the default value for a given keys.
+---@param key any the key to retrieve the value from
+---@return any
 function Config:default(key)
     return self._defaults[key]
 end
 
+---Set the value for a given key.
+---@param key any the key to set the value of
+---@param value any the new value
 function Config:set(key, value)
     self.options[key] = value
 end

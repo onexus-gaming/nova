@@ -49,7 +49,9 @@ end
 
 local Scene = require "lib.nova.classes.Scene"
 local Service = require "lib.nova.classes.Service"
+local Config = require "lib.nova.classes.Config"
 local Rectangle = require "lib.nova.classes.Rectangle"
+local SmoothCounter = require "lib.nova.classes.SmoothCounter"
 local Store = require "lib.nova.classes.Store"
 local Timer = require "lib.nova.classes.Timer"
 local Toast = require "lib.nova.classes.Toast"
@@ -66,14 +68,15 @@ nova = {
 
     checkArgType = checkArgType,
     checkArgClass = checkArgClass,
-
-    Rectangle = Rectangle,
-
+    
     Scene = Scene,
     Service = Service,
-
+    
+    Config = Config,
+    Rectangle = Rectangle,
     Timer = Timer,
     Toast = Toast,
+    SmoothCounter = SmoothCounter,
     Store = Store,
     Vector = Vector,
     vectors = {

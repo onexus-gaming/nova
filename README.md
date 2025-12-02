@@ -1,7 +1,6 @@
 # nova
 simple and effective framework to make games with love2d, successor to novum
 
-
 > [!WARNING]  
 > this repository has been made public early in order to access GitHub wikis. you can try making games with this if you want to read the source code.
 

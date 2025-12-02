@@ -16,12 +16,14 @@ function Config:new(configData)
     self:load()
 end
 
+---Initialize the default configuration at the save location.
 function Config:init()
     self.options = self._defaults
     self:save()
 end
 
 -- TODO: backup autoload
+---Load the configuration from the save location.
 function Config:load()
     self.options = {}
     local info = love.filesystem.getInfo(self._file)
@@ -44,6 +46,8 @@ function Config:load()
     end
 end
 
+---Save the configuration to the save location
+---@param outfile string? to override the default save location
 function Config:save(outfile)
     if outfile == nil then
         outfile = self._file
@@ -58,8 +62,9 @@ function Config:save(outfile)
     end
 end
 
+---Save a backup of the configuration close to the save location (<save location>.bak)
 function Config:backup()
-    self:save('bak.' .. self._file)
+    self:save(self._file .. '.bak')
 end
 
 function Config:file()

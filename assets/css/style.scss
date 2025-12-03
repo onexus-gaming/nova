@@ -5,15 +5,23 @@
 
 header {
     background: #242424;
+    & h1 {
+        text-shadow: 0px 2px 0px #00a3ff;
+    }
 }
 #banner {
     background: #00a3ff;
+    border: none;
 
     .button {
         background: #242424;
         background-color: #242424;
-        color: #bbb;
+        color: #fff !important;
+        border: none;
         transition: 250ms;
+        & strong {
+            color: #fff !important;
+        }
         &:hover {
             background: #474747;
             background-color: #474747;

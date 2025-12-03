@@ -1,5 +1,5 @@
 ---
-title: Tutorial
+title: Getting started with nova
 ---
 
 # Getting started

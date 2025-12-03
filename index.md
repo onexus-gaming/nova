@@ -10,7 +10,7 @@ A simple and effective framework to make games with LÖVE, succeeding the earlie
 > **NOTE**
 > git **must** be installed to use the **install script**.
 
-[Get started here!](/tutorial/getting-started.md)
+[Get started here!](/tutorial/)
 
 ## Features
 

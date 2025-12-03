@@ -1,3 +1,7 @@
+---
+title: Tutorial
+---
+
 # Getting started
 
 There are multiple ways to get started with developing using nova, some longer than others. Use the one that fits your use case the best.

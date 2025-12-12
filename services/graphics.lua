@@ -11,6 +11,8 @@ function graphics:new()
     self.scaleMultiplier = 1
 
     self.scalingCoefficient = self:calculateScalingCoefficient()
+
+    self.applyingTransformations = false
 end
 
 -- scaling
@@ -26,7 +28,7 @@ function graphics:setIntendedDimensions(width, height)
     self.intendedDimensions.height = height
 end
 
----Set the scaling coefficient multiplier and updazte the scaling coefficient
+---Set the scaling coefficient multiplier and update the scaling coefficient
 ---@param scaleMultiplier number
 function graphics:setScaleMultiplier(scaleMultiplier)
     nova.checkArgType("scaleMultiplier", scaleMultiplier, "number")
@@ -63,6 +65,7 @@ end
 ---Set whether to apply scaling and translation to fit the intended area to the screen
 ---@param state boolean
 function graphics:applyTransformations(state)
+    self.applyingTransformations = state
     if state then
         local w, h = love.graphics.getDimensions()
         love.graphics.push()

@@ -60,7 +60,7 @@ local Vector = require "lib.nova.classes.Vector"
 -- simple and effective framework to make games with love2d, successor to novum
 ---@diagnostic disable-next-line: lowercase-global
 nova = {
-    version = "0.1.5",
+    version = "0.1.6",
     year = 2025,
 
     title = "untitled nova game",
@@ -68,10 +68,10 @@ nova = {
 
     checkArgType = checkArgType,
     checkArgClass = checkArgClass,
-    
+
     Scene = Scene,
     Service = Service,
-    
+
     Config = Config,
     Rectangle = Rectangle,
     Timer = Timer,
@@ -156,6 +156,8 @@ nova = {
 nova.graphics = require("lib.nova.services.graphics")()
 -- Toast manager
 nova.toasts = require("lib.nova.services.toasts")(5, 4, 4)
+-- Development overlay (initialize with nova.devOverlay:enable())
+nova.devOverlay = require("lib.nova.services.devOverlay")()
 nova.services:registerInOrder(nova.toasts, nova.graphics)
 
 -- loading scenes
@@ -175,12 +177,13 @@ end
 
 local function createHook(name)
     return function(...)
+        local capture = false -- a service can capture an event so that the running scene does not respond to that event
         for i, svc in ipairs(nova.services.list) do
             if svc["_pre_"..name] then
-                svc["_pre_"..name](svc, ...)
+                capture = capture or svc["_pre_"..name](svc, ...)
             end
         end
-        if nova.scenes.current[name] then
+        if nova.scenes.current[name] and not capture then
             nova.scenes.current[name](nova.scenes.current, ...)
         end
         for i, svc in ipairs(nova.services.list) do
@@ -191,7 +194,7 @@ local function createHook(name)
     end
 end
 
-local hookTable = {"load", "update", "draw", "resize", "occluded", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved", "dropbegan", "dropmoved", "dropcompleted", "filedropped"}
+local hookTable = {"load", "update", "draw", "resize", "occluded", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved", "gamepadaxis", "gamepadpressed", "gamepadreleased", "joystickpressed", "joystickreleased", "joystickaxis", "joystickhat", "joystickadded", "joystickremoved", "dropbegan", "dropmoved", "dropcompleted", "filedropped"}
 for i, v in ipairs(hookTable) do
     love[v] = createHook(v)
 end

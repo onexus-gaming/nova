@@ -64,3 +64,21 @@ function Scene:draw() end
 return Scene
 ```
 
+You may notice that the signatures for `Scene:update(dt)` and `Scene:draw()` are eerily similar to `love.update(dt)` and `love.draw()` respectively.
+This isn't without cause: nova forwards the major events ([callbacks](https://love2d.org/wiki/Category:Callbacks)) from LÖVE to the currently running scene exactly as they would be called in a regular game without the framework.
+
+Technically, you are not obligated to define a function in your scene for every callback, as nova, for every callback, checks whether your scene defines that callback or not before passing it.
+
+Note that the callbacks in your scene may occasionally not be called due to a feature called **capturing** (which will be explained in the **services** section).
+
+## Services
+
+TODO
+
+### Capturing a callback
+
+TODO
+
+## Callback calling order
+
+TODO (`capture = capture or service:_pre_<callback>` -> `if not capture: scene:<callback>` -> `service:_<callback>`)

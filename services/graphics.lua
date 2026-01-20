@@ -57,9 +57,7 @@ end
 -- hooks to resize calls to recalculate the scaling coefficient
 -- for efficiency
 function graphics:_resize(w, h)
-    print('RSZ', w, h)
     self.scalingCoefficient = self:calculateScalingCoefficient(w, h)
-    print(self.scalingCoefficient, w/self.scalingCoefficient, h/self.scalingCoefficient)
 end
 
 ---Set whether to apply scaling and translation to fit the intended area to the screen

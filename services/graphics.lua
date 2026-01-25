@@ -39,6 +39,10 @@ function graphics:setScaleMultiplier(scaleMultiplier)
     self.scaleMultiplier = scaleMultiplier
 
     self.scalingCoefficient = self:calculateScalingCoefficient()
+    self.scaledOrigin = {
+        x = math.round((w - self.scalingCoefficient * self.intendedDimensions.width)/2),
+        y = math.round((h - self.scalingCoefficient * self.intendedDimensions.height)/2)
+    }
 end
 
 ---Calculate the scaling coefficient with respect to the intended dimensions and applied multiplier
@@ -58,6 +62,10 @@ end
 -- for efficiency
 function graphics:_resize(w, h)
     self.scalingCoefficient = self:calculateScalingCoefficient(w, h)
+    self.scaledOrigin = {
+        x = math.round((w - self.scalingCoefficient * self.intendedDimensions.width)/2),
+        y = math.round((h - self.scalingCoefficient * self.intendedDimensions.height)/2)
+    }
 end
 
 ---Set whether to apply scaling and translation to fit the intended area to the screen
@@ -67,7 +75,7 @@ function graphics:applyTransformations(state)
     if state then
         local w, h = love.graphics.getDimensions()
         love.graphics.push()
-        love.graphics.translate(math.round((w - self.scalingCoefficient * self.intendedDimensions.width)/2), math.round((h - self.scalingCoefficient * self.intendedDimensions.height)/2))
+        love.graphics.translate(self.scaledOrigin.x, self.scaledOrigin.y)
         love.graphics.scale(self.scalingCoefficient)
     else
         love.graphics.pop()

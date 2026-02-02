@@ -1,0 +1,17 @@
+name = "classic"
+url = "onexus-gaming.github.io/nova/classic.toml"
+requires = []
+method = "script"
+
+[[install]]
+method = "download"
+url = "https://raw.githubusercontent.com/rxi/classic/refs/heads/master/classic.lua"
+target = "lib/classic/init.lua"
+
+[[remove]]
+method = "rmdir"
+target = "lib/classic"
+
+[[test]]
+method = "exists"
+path = "lib/classic"

@@ -1,0 +1,10 @@
+name = "nova"
+url = "onexus-gaming.github.io/nova/package.toml"
+requires = ["onexus-gaming.github.io/nova/binser.toml", "onexus-gaming.github.io/nova/classic.toml"]
+method = "git"
+source = "https://github.com/onexus-gaming/nova.git"
+target = "lib/nova"
+
+[[test]]
+method = "exists"
+path = "lib/nova"

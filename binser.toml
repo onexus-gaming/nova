@@ -1,0 +1,17 @@
+name = "binser"
+url = "onexus-gaming.github.io/nova/binser.toml"
+requires = []
+method = "script"
+
+[[install]]
+method = "download"
+url = "https://raw.githubusercontent.com/bakpakin/binser/refs/heads/master/binser.lua"
+target = "lib/binser/init.lua"
+
+[[remove]]
+method = "rmdir"
+target = "lib/binser"
+
+[[test]]
+method = "exists"
+path = "lib/binser"

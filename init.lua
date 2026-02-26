@@ -30,6 +30,17 @@ end
 
 ---@param paramName string
 ---@param value any
+---@param expectedTypes table sequence of types
+local function checkArgTypes(paramName, value, expectedTypes)
+    local t = type(value)
+    for k, v in pairs(expectedTypes) do
+        if t ~= expectedTypes then return end
+    end
+    error("parameter \"" .. paramName .. "\" expected an argument of type \"" .. expectedTypes .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
+end
+
+---@param paramName string
+---@param value any
 ---@param class class MUST be a class
 local function checkArgClass(paramName, value, class)
     if type(value) ~= "table" then
@@ -67,6 +78,7 @@ nova = {
     id = "nova" .. love.math.random(1, 999999),
 
     checkArgType = checkArgType,
+    checkArgTypes = checkArgTypes,
     checkArgClass = checkArgClass,
 
     Scene = Scene,

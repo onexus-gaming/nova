@@ -16,11 +16,11 @@ local Store = {
         self[isolatedValue] = value
     end,
     bind = function(self, callback)
-        -- TODO: ADD TYPE CHECKING
+        nova.checkArgType("callback", callback, "function")
         table.insert(self.callbacks, callback)
     end,
     unbind = function(self, pos)
-        -- TODO: ADD TYPE CHECKING
+        nova.checkArgTypes("pos", pos, {"number", "function"})
         table.remove(self.callbacks, pos)
     end,
 }

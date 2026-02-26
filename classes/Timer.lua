@@ -13,7 +13,6 @@ function Timer:new(min, max, initial)
     nova.checkArgType("max", max, "number")
     nova.checkArgType("initial", initial, "number")
 
-
     self.min = min
     self.max = max
     self.initial = initial

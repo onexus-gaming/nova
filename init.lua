@@ -1,5 +1,5 @@
--- nova 0.1.3
--- onexus, 2025
+-- nova 0.1.6
+-- onexus, 2026
 
 ---@alias class table MUST be a class
 ---@alias float number n >= math.floor(n)
@@ -72,7 +72,7 @@ local Vector = require "lib.nova.classes.Vector"
 ---@diagnostic disable-next-line: lowercase-global
 nova = {
     version = "0.1.6",
-    year = 2025,
+    year = 2026,
 
     title = "untitled nova game",
     id = "nova" .. love.math.random(1, 999999),

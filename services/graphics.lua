@@ -8,7 +8,7 @@ function graphics:new()
         width = love.graphics.getWidth(),
         height = love.graphics.getHeight(),
     }
-    self.scaleMultiplier = 1
+    self:setScaleMultiplier(1)
 
     self.scalingCoefficient = self:calculateScalingCoefficient()
 
@@ -39,6 +39,7 @@ function graphics:setScaleMultiplier(scaleMultiplier)
     self.scaleMultiplier = scaleMultiplier
 
     self.scalingCoefficient = self:calculateScalingCoefficient()
+    local w, h = love.graphics.getWidth(), love.graphics.getHeight()
     self.scaledOrigin = {
         x = math.round((w - self.scalingCoefficient * self.intendedDimensions.width)/2),
         y = math.round((h - self.scalingCoefficient * self.intendedDimensions.height)/2)

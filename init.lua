@@ -54,6 +54,35 @@ local function checkArgClass(paramName, value, class)
     end
 end
 
+---Returns whether or not a value is of a specified type or class.
+---@param value any
+---@param expectedType type|class
+---@return boolean
+local function isType(value, expectedType)
+    if type(expectedType) == "string" then
+        return type(value) == expectedType
+    else
+        return type(value) == "table" and value.is and value:is(expectedType)
+    end
+end
+
+---Returns the value of `value` if it is gettable, or `value` itself if it isn't.
+---@param value any|Store<any>
+---@return any
+local function getValue(value)
+    if type(value) == "table" then
+        if value.get then
+            return value:get()
+        elseif value.getValue then
+            return value:getValue()
+        else
+            return value
+        end
+    else
+        return value
+    end
+end
+
 function math.round(x)
     return math.floor(x + 0.5)
 end
@@ -80,6 +109,7 @@ nova = {
     checkArgType = checkArgType,
     checkArgTypes = checkArgTypes,
     checkArgClass = checkArgClass,
+    isType = isType,
 
     Scene = Scene,
     Service = Service,
@@ -90,16 +120,7 @@ nova = {
     Toast = Toast,
     SmoothCounter = SmoothCounter,
     Store = Store,
-    ---Returns the value of `value` if it is gettable, or `value` itself if it isn't.
-    ---@param value any|Store<any>
-    ---@return any
-    getValue = function(value)
-        if type(value) == "table" and value.get then
-            return value:get()
-        else
-            return value
-        end
-    end,
+    getValue = getValue,
     Vector = Vector,
     vectors = {
         null2d = Vector.make(2),

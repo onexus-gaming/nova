@@ -66,6 +66,17 @@ local SmoothCounter = {
     end,
 }
 
+local SmoothCounterMT = {
+    __index = SmoothCounter,
+    __call = function(self, value)
+        if value ~= nil then
+            self:setTarget(value)
+        else
+            return self:getValue()
+        end
+    end,
+}
+
 return function(value, target, exponent, factor)
     local instance = {
         value = value,
@@ -75,16 +86,7 @@ return function(value, target, exponent, factor)
         factor = factor,
     }
 
-    setmetatable(instance, {
-        __index = SmoothCounter,
-        __call = function(self, value)
-            if value ~= nil then
-                self:setTarget(value)
-            else
-                return self:getValue()
-            end
-        end,
-    })
+    setmetatable(instance, SmoothCounterMT)
 
     return instance
 end

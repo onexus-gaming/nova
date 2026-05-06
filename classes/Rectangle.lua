@@ -34,7 +34,7 @@ end
 ---Check whether 2 rectangles intersect (exact same coordinates and dimensions)
 ---@return boolean
 function Rectangle:intersects(other)
-    if type(other) == "table" and other.is and other:is(Rectangle) then
+    if nova.isType(other, Rectangle) then
         return self.x == other.x and self.y == other.y and self.width == other.width and self.height == other.height
     else
         error("attempt to check intersection between Rectangle and " .. type(other))

@@ -117,6 +117,7 @@ function Vector:scalarProduct(other)
 
     return value
 end
+Vector.dotProduct = Vector.scalarProduct
 
 function Vector:scale(coefficient)
     nova.checkArgType("coefficient", coefficient, "number")

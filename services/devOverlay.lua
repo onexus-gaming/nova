@@ -10,6 +10,15 @@ local fonts = {
     data = love.graphics.newFont(14),
 }
 
+local mouseButtons = {
+    "P",
+    "S",
+    "M",
+}
+for i=4,16 do
+    mouseButtons[i] = tostring(i)
+end
+
 function devOverlay:new()
     self.display = false
     self.hitKeys = {}
@@ -62,6 +71,7 @@ function devOverlay:_pre_joystickreleased()
 end
 
 function devOverlay:_draw()
+    local s
     if not self.display then return end
 
     local initialApplyTransformations = nova.graphics.applyingTransformations
@@ -78,6 +88,21 @@ function devOverlay:_draw()
 
     love.graphics.rectangle("fill", 0, 0, love.graphics.getDimensions())
     graphicsHandler:applyTransformations(true)
+
+    love.graphics.setColor(1, 0.2, 0)
+    love.graphics.setFont(fonts.title)
+    love.graphics.print("Game window", 0, y)
+    step()
+
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.setFont(fonts.data)
+    local w, h = love.graphics.getDimensions()
+    local wx, wy = love.window.getPosition()
+    local _, _, flags = love.window.getMode()
+    love.graphics.print(w .. "x" .. h .. " @ (" .. wx .. ", " .. wy .. ")" .. " " .. love.timer.getFPS() .. "FPS", 0, y)
+    step()
+    love.graphics.print("display n°" .. flags.display .. ": " .. love.window.getDisplayName(flags.display), 0, y)
+    step()
 
     love.graphics.setColor(1, 0.2, 0)
     love.graphics.setFont(fonts.title)
@@ -99,6 +124,23 @@ function devOverlay:_draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(fonts.data)
     love.graphics.print(s, 0, y)
+    step()
+
+    love.graphics.setColor(1, 0.2, 0)
+    love.graphics.setFont(fonts.title)
+    love.graphics.print("Mouse input", 0, y)
+    step()
+
+    s = ""
+    for i, v in ipairs(mouseButtons) do
+        if love.mouse.isDown(i) then
+            s = s .. v .. " "
+        end
+    end
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.setFont(fonts.data)
+    local mx, my = love.mouse.getPosition()
+    love.graphics.print("(" .. mx .. ", " .. my .. ") " .. s, 0, y)
     step()
 
     love.graphics.setColor(1, 0.2, 0)
@@ -129,7 +171,7 @@ function devOverlay:_draw()
             if string.find(hat, "u") then
                 love.graphics.arc("fill", "pie", x + 18, y + 9, 18, math.pi/4*5, math.pi/4*7)
             end
-            
+
             love.graphics.setColor(1, 1, 1)
             love.graphics.circle("line", x + 18, y + 9, 18)
             love.graphics.printf(j, x, y, 36, 'center')

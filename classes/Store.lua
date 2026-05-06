@@ -1,14 +1,21 @@
 ---Basic class for storing data.
 ---Doesn't use the default object system for simplicity reasons.
----@class Store
----@field callbacks table
+
 
 local isolatedValue = {}
 
+---@class Store<T>
+---@field callbacks table
 local Store = {
+    ---Returns the value contained by the Store.
+    ---@param self Store<any>
+    ---@return any
     get = function(self)
         return self[isolatedValue]
     end,
+    ---Sets the value in the Store. Calls all bound callbacks if any.
+    ---@param self Store<any>
+    ---@param value any
     set = function(self, value)
         for i, v in ipairs(self.callbacks) do
             v(self, self[isolatedValue], value)
@@ -25,21 +32,24 @@ local Store = {
     end,
 }
 
+local StoreMT = {
+    __index = Store,
+    __call = function(self, value)
+        if value ~= nil then
+            self:set(value)
+        else
+            return self:get()
+        end
+    end,
+}
+
 return function(initValue)
+    ---@type Store<any>
     local instance = {
         callbacks = {},
     }
 
-    setmetatable(instance, {
-        __index = Store,
-        __call = function(self, value)
-            if value ~= nil then
-                self:set(value)
-            else
-                return self:get()
-            end
-        end,
-    })
+    setmetatable(instance, StoreMT)
 
     instance:set(initValue)
 

@@ -90,6 +90,16 @@ nova = {
     Toast = Toast,
     SmoothCounter = SmoothCounter,
     Store = Store,
+    ---Returns the value of `value` if it is gettable, or `value` itself if it isn't.
+    ---@param value any|Store<any>
+    ---@return any
+    getValue = function(value)
+        if type(value) == "table" and value.get then
+            return value:get()
+        else
+            return value
+        end
+    end,
     Vector = Vector,
     vectors = {
         null2d = Vector.make(2),

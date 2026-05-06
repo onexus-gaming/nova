@@ -26,7 +26,7 @@ function devOverlay:new()
 end
 
 function devOverlay:enable()
-    nova.toasts:post(nova.Toast.TOAST_TYPE.INFORMATION, "The developer overlay is enabled. Press F12 to open it.")
+    self.toast = nova.toasts:post(nova.Toast.TOAST_TYPE.INFORMATION, "The developer overlay is enabled. Press F12 to open it.")
     nova.services:register(graphicsHandler, 1)
     nova.services:register(self, 1)
 end
@@ -73,6 +73,8 @@ end
 function devOverlay:_draw()
     local s
     if not self.display then return end
+
+    if self.toast ~= nil then self.toast:kill() end
 
     local initialApplyTransformations = nova.graphics.applyingTransformations
     if initialApplyTransformations then nova.graphics.applyTransformations(false) end

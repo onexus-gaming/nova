@@ -35,6 +35,10 @@ function Toast:height(lifetime)
     return self.TEXT_FONT:getHeight() + self.TYPE_FONT:getHeight() + 8
 end
 
+function Toast:kill()
+    self.decay = 0
+end
+
 function Toast:render(x, y, lifetime)
     local of = love.graphics.getFont()
     local oc = {love.graphics.getColor()}

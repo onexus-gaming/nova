@@ -14,9 +14,11 @@ function toasts:register(toast)
     table.insert(self.items, 1, toast)
 end
 
+---@return Toast
 function toasts:post(type, text, decay)
     local toast = nova.Toast(type, text, love.timer.getTime(), decay or self.defaultDecay)
     self:register(toast)
+    return toast
 end
 
 function toasts:_update(dt)

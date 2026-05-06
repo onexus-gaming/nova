@@ -83,6 +83,26 @@ local function getValue(value)
     end
 end
 
+---Sets the value of `store` if it is settable. If it is, returns true. Returns false otherwise.
+---@param store any|Store<any>
+---@param value any
+---@return boolean
+local function setValue(store, value)
+    if type(store) == "table" then
+        if store.set then
+            store:set(value)
+            return true
+        elseif store.setValue then
+            store:setValue(value)
+            return true
+        else
+            return false
+        end
+    else
+        return false
+    end
+end
+
 function math.round(x)
     return math.floor(x + 0.5)
 end
@@ -121,6 +141,7 @@ nova = {
     SmoothCounter = SmoothCounter,
     Store = Store,
     getValue = getValue,
+    setValue = setValue,
     Vector = Vector,
     vectors = {
         null2d = Vector.make(2),

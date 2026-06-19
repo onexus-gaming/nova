@@ -70,10 +70,8 @@ function graphics:_resize(w, h)
 end
 
 function graphics:convertPosition(x, y)
-    x = x + self.scaledOrigin.x
-    y = y + self.scaledOrigin.y
-    x = x * self.scalingCoefficient
-    y = y * self.scalingCoefficient
+    x = x * self.scalingCoefficient + self.scaledOrigin.x
+    y = y * self.scalingCoefficient + self.scaledOrigin.y
     return x, y
 end
 

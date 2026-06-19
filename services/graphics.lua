@@ -69,6 +69,14 @@ function graphics:_resize(w, h)
     }
 end
 
+function graphics:convertPosition(x, y)
+    x = x + self.scaledOrigin.x
+    y = y + self.scaledOrigin.y
+    x = x * self.scalingCoefficient
+    y = y * self.scalingCoefficient
+    return x, y
+end
+
 ---Set whether to apply scaling and translation to fit the intended area to the screen
 ---@param state boolean
 function graphics:applyTransformations(state)

@@ -24,7 +24,11 @@ end
 ---@param expectedType type
 local function checkArgType(paramName, value, expectedType)
     if type(value) ~= expectedType then
-        error("parameter \"" .. paramName .. "\" expected an argument of type \"" .. expectedType .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
+        error(
+        "parameter \"" ..
+        paramName ..
+        "\" expected an argument of type \"" ..
+        expectedType .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
     end
 end
 
@@ -36,7 +40,11 @@ local function checkArgTypes(paramName, value, expectedTypes)
     for k, v in pairs(expectedTypes) do
         if t ~= expectedTypes then return end
     end
-    error("parameter \"" .. paramName .. "\" expected an argument of type \"" .. expectedTypes .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
+    error(
+    "parameter \"" ..
+    paramName ..
+    "\" expected an argument of type \"" ..
+    expectedTypes .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
 end
 
 ---@param paramName string
@@ -44,13 +52,25 @@ end
 ---@param class class MUST be a class
 local function checkArgClass(paramName, value, class)
     if type(value) ~= "table" then
-        error("parameter \"" .. paramName .. "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
+        error(
+        "parameter \"" ..
+        paramName ..
+        "\" expected an argument to be an object of class \"" ..
+        class .. "\" but received an argument of type \"" .. type(value) .. "\"", 3)
     end
     if type(value.is) ~= "function" then
-        error("parameter \"" .. paramName .. "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of type \"table\"", 3)
+        error(
+        "parameter \"" ..
+        paramName ..
+        "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of type \"table\"",
+            3)
     end
     if not value:is(class) then
-        error("parameter \"" .. paramName .. "\" expected an argument to be an object of class \"" .. class .. "\" but received an argument of class \"" .. value.super .. "\"", 3)
+        error(
+        "parameter \"" ..
+        paramName ..
+        "\" expected an argument to be an object of class \"" ..
+        class .. "\" but received an argument of class \"" .. value.super .. "\"", 3)
     end
 end
 
@@ -168,10 +188,10 @@ nova = {
     -- Returns the arguments it takes
     echo = function(...) return ... end,
     -- Returns the arguments it takes as a table
-    echoT = function(...) return {...} end,
+    echoT = function(...) return { ... } end,
     -- Returns a function that returns the passed values
     wrap = function(...)
-        local args = {...}
+        local args = { ... }
         return function()
             return (unpack or table.unpack)(args)
         end
@@ -209,12 +229,19 @@ nova = {
             end
         end,
         registerInOrder = function(self, ...)
-            for i, svc in ipairs({...}) do
+            for i, svc in ipairs({ ... }) do
                 self:register(svc)
             end
         end,
     },
 }
+
+-- common wraps
+
+nova.wrapFalse = nova.wrap(false)
+nova.wrapTrue = nova.wrap(true)
+nova.wrapZero = nova.wrap(0)
+nova.wrapOne = nova.wrap(1)
 
 -- loading services
 
@@ -244,15 +271,15 @@ end
 local function createHook(name)
     return function(...)
         local capture = false -- a service can capture an event so that the running scene does not respond to that event
-        for i, svc in ipairs(nova.services.list) do
-            if svc["_pre_"..name] then
-                capture = capture or svc["_pre_"..name](svc, ...)
+        for _, svc in ipairs(nova.services.list) do
+            if svc["_pre_" .. name] then
+                capture = capture or svc["_pre_" .. name](svc, ...)
             end
         end
         if nova.scenes.current[name] and not capture then
             nova.scenes.current[name](nova.scenes.current, ...)
         end
-        for i, svc in ipairs(nova.services.list) do
+        for _, svc in ipairs(nova.services.list) do
             if svc["_" .. name] then
                 svc["_" .. name](svc, ...)
             end
@@ -260,7 +287,10 @@ local function createHook(name)
     end
 end
 
-local hookTable = {"load", "update", "draw", "resize", "occluded", "keypressed", "keyreleased", "mousefocus", "mousemoved", "mousepressed", "mousereleased", "wheelmoved", "gamepadaxis", "gamepadpressed", "gamepadreleased", "joystickpressed", "joystickreleased", "joystickaxis", "joystickhat", "joystickadded", "joystickremoved", "dropbegan", "dropmoved", "dropcompleted", "filedropped"}
+local hookTable = { "load", "update", "draw", "resize", "occluded", "keypressed", "keyreleased", "mousefocus",
+    "mousemoved", "mousepressed", "mousereleased", "wheelmoved", "gamepadaxis", "gamepadpressed", "gamepadreleased",
+    "joystickpressed", "joystickreleased", "joystickaxis", "joystickhat", "joystickadded", "joystickremoved", "dropbegan",
+    "dropmoved", "dropcompleted", "filedropped" }
 for i, v in ipairs(hookTable) do
     love[v] = createHook(v)
 end
